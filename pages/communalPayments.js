@@ -15,6 +15,10 @@ class CommunalPayments extends Page {
 
     get allLoadedOrganisationsLinks() { return browser.elements('.ui-menu__item .ui-menu__link'); }
 
+    /*
+    С одной стороны, ветвления в тестах - не очень хорошая практика.
+    С другой - не придумал как работать с проверкой и выбором города, без ветвления.
+     */
     selectCity(cityConstant) {
         const region = this.regionSelection.getText();
         if (region.includes(cityConstant.invariantPartRussianName)) {
@@ -30,6 +34,9 @@ class CommunalPayments extends Page {
         return new OrganisationSelection(index);
     }
 
+    /*
+    Пользуемся знанием, что browser.elements возврщает объект, где по ключу value получим массив найденных элементов.
+     */
     isOrganisationOnThePage(organisationName = '') {
         const allOrganisationsArray = this.allLoadedOrganisationsLinks.value.map((element, index) =>
             this.getOrganisationElementByIndex(index).organisationLink.getText());
